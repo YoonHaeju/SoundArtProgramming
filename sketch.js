@@ -1,50 +1,60 @@
-// 버튼 누르면 폰 각도에 따라서 색 변하는 ? 1번스케치랑 2번 스케치 합친 바이브
 
-var wave;
 var button;
-var playing = false;
-var ampValue =0;
+var button2;
+
+
+var C_text = "";
+var D_text = "";
 
 function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
   //createCanvas(displayWidth, displayHeight);  // 각 휴대폰 화면의 크기에 맞춰서 보이도록
   createCanvas(720,256);
 
-  wave = new p5.Oscillator();   // osc~의 역할
-  wave.setType('sine');   //파형을 sine파로
-  //wave.freq(440); // 주파수 (Hz) frequancy  //++
-  wave.amp(0);    // 소리의 크기 (볼륨) // 0~1
+  background(255, 255, 255);
+  button = createButton('C');
   
-  button = createButton('play/pause');
-  button.mousePressed(toggle);
+  button2 = createButton('D');
+  
 
 }
 
 
 function draw() {   // 1초에 60프레임씩 무한 반복
-  //wave.amp(ampValue, 0.1);  //++
-  wave.freq(ampValue);
+  background(255, 255, 255);
+  
+  text(C_text, 10, 10);
+  text(D_text, 30, 30);
+  
+  button.touchStarted(PlayC);   // 버튼 눌리면 PlayC 함수 실행
+  button.touchEnded(StopC);     // 버튼에서 손 떼지면 StopC 함수 실행
+  
+  button2.touchStarted(PlayD);
+  button2.touchEnded(StopD);
+  
+  
+}
 
+function StopC(){
+  C_text = ""
+}
+function PlayC(){
+  C_text = "C"
+}
+function StopD(){
+  D_text = ""
+}
+function PlayD(){
+  D_text = "D"
 }
 
 
-function toggle(){
-  if(!playing){
-    wave.start();   // 소리가 남
-    //wave.amp(ampValue, 1);  //++
-    wave.amp(0.3, 1);   ////
-    playing = true;
-  }else{
-    wave.amp(0, 1);     //++ ++일떄는 주석처리 필요
-    ampValue = 0;
-    playing=false;
-  }
-}
-
-
+/*
 function deviceMoved(){   // 디바이스가 움직이면
   //ampValue = accelerationX/2;   //++
   ampValue = accelerationX*1000;  ////
   background(255, 255, 255);
-  text(accelerationX/2, 10, 10);
-
+  text(accelerationX/2, 50, 50);
 }
+*/
+
+
