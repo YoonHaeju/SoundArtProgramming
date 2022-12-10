@@ -24,7 +24,12 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
     wave[i].setType('sine');
     wave[i].amp(0);  // 일단 볼륨 다 0
   }
+  for(var j=0; j<7; j++){
+    button[j].touchStarted(eval("Play"+str(j)));
+    button[j].touchEnded(eval("Stop"+str(j)));
+  }
   
+  /*
   button[0].touchStarted(Play0);
   button[0].touchEnded(Stop0);
   button[1].touchStarted(Play1);
@@ -39,6 +44,7 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
   button[5].touchEnded(Stop5);
   button[6].touchStarted(Play6);
   button[6].touchEnded(Stop6);
+  */
 }
 
 
