@@ -112,10 +112,7 @@ function Play6(){
 }
 
 /*
-function deviceMoved(){   // 디바이스가 움직이면
-  //ampValue = accelerationX/2;   //++
-  ampValue = accelerationX*1000;  ////
-  background(255, 255, 255);
-  text(accelerationX/2, 50, 50);
+function deviceMoved(){   // 디바이스 앞뒤로 꺽으면 색 변경
+  background(rotationX*2, 200, 200);
+  text(rotationX, 50, 50);
 }
-*/
