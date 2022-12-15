@@ -111,7 +111,6 @@ function Play6(){
   wave[6].start();
 }
 
-/*
 function deviceMoved(){   // 디바이스 앞뒤로 꺽으면 색 변경
   background(rotationX*2, 200, 200);
   text(rotationX, 50, 50);
