@@ -5,126 +5,134 @@ var wave = [7];
 
 // 버튼
 var button = [7];
+var waveform_button;
 
-// play state
-var state = [7];
-var volume = 0;
+var volume_size = 0;
+
+var waveform = 'sine';
 
 
 function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
-  createCanvas(300, 200);
+    createCanvas(300, 200);
 
-  background(255, 255, 255);
-  
-  button[0] = createButton('C');
-  button[1] = createButton('D');
-  button[2] = createButton('E');
-  button[3] = createButton('F');
-  button[4] = createButton('G');
-  button[5] = createButton('A');
-  button[6] = createButton('B');
-  
-  for(var i=0; i<7; i++){
-    wave[i] = new p5.Oscillator();
-    wave[i].setType('sine');
-    wave[i].amp(0);  // 일단 볼륨 다 0
-    state[i] = false;
-  }
-  for(var j=0; j<7; j++){
-    button[j].touchStarted(eval("Play"+str(j)));
-    button[j].touchEnded(eval("Stop"+str(j)));
-  }
+    background(255, 255, 255);
+
+    button[0] = createButton('C');
+    button[1] = createButton('D');
+    button[2] = createButton('E');
+    button[3] = createButton('F');
+    button[4] = createButton('G');
+    button[5] = createButton('A');
+    button[6] = createButton('B');
+    waveform_button = createButton('wave');
+
+    for (var i = 0; i < 7; i++) {
+        wave[i] = new p5.Oscillator();
+        wave[i].setType(waveform);
+        wave[i].amp(volume_size);  // 일단 볼륨 다 0
+    }
+
+    wave[0].freq(261.6);
+    wave[1].freq(293.6);
+    wave[2].freq(329.6);
+    wave[3].freq(349.2);
+    wave[4].freq(391.9);
+    wave[5].freq(440);
+    wave[6].freq(493.8);
+
+    for (var j = 0; j < 7; j++) {
+        button[j].touchStarted(eval("Play" + str(j)));
+        button[j].touchEnded(eval("Stop" + str(j)));
+    }
+
+    waveform_button.touchStarted(waveChange);
 }
 
 
 function draw() {   // 1초에 60프레임씩 무한 반복
-  background(255, 255, 255);
+    //background(255, 255, 255);
 
-  
-}
-
-function Stop0(){
-  wave[0].amp(0 ,1);
-  state[0] = false;
-}
-function Stop1(){
-  wave[1].amp(0, 1);
-  state[1] = false;
-}
-function Stop2(){
-  wave[2].amp(0, 1);
-  state[2] = false;
-}
-function Stop3(){
-  wave[3].amp(0, 1);
-  state[3] = false;
-}
-function Stop4(){
-  wave[4].amp(0, 1);
-  state[4] = false;
-}
-function Stop5(){
-  wave[5].amp(0, 1);
-  state[5] = false;
-}
-function Stop6(){
-  wave[6].amp(0, 1);
-  state[6] = false;
+    for (var k = 0; k < 7; k++) {
+        wave[k].setType(waveform);
+        wave[k].amp(volume_size);  // 일단 볼륨 다 0
+    }
 }
 
 
-
-function Play0(){
-  //state[0] = true;
-  wave[0].freq(261.6);
-  wave[0].amp(volume, 1);
-  wave[0].start();
+function Stop0() {
+    wave[0].stop();
 }
-function Play1(){
-  //state[1] = true;
-  wave[1].freq(293.6);
-  wave[1].amp(volume, 1);
-  wave[1].start();
+function Stop1() {
+    wave[1].stop();
 }
-function Play2(){
-  //state[2] = true;
-  wave[2].freq(329.6);
-  wave[2].amp(volume, 1);
-  wave[2].start();
+function Stop2() {
+    wave[2].stop();
 }
-function Play3(){
-  //state[3] = true;
-  wave[3].freq(349.2);
-  wave[3].amp(volume, 1);
-  wave[3].start();
+function Stop3() {
+    wave[3].stop();
 }
-function Play4(){
-  //state[4] = true;
-  wave[4].freq(391.9);
-  wave[4].amp(volume, 1);
-  wave[4].start();
+function Stop4() {
+    wave[4].stop();
 }
-function Play5(){
-  //state[5] = true;
-  wave[5].freq(440);
-  wave[5].amp(volume, 1);
-  wave[5].start();
+function Stop5() {
+    wave[5].stop();
 }
-function Play6(){
-  //state[6] = true;
-  wave[6].freq(493.8);
-  wave[6].amp(volume, 1);
-  wave[6].start();
+function Stop6() {
+    wave[6].stop();
 }
 
-function deviceMoved(){   // 디바이스 앞뒤로 꺽으면 색 변경
-  // 일어나서 연주하는 것을 기본으로
-  text(rotationX, 50, 50);
-  if(rotationX>-30 && rotationX<=60){
-    volume = (rotationX+30)/90;
-  }else if(rotationX>60 && rotationX <=180){
-    volume = 1;
-  }else if(rotationX<=-30&& rotationX>-180){
-    volume = 0;
-  }
+
+function Play0() {
+    wave[0].start();
+}
+function Play1() {
+    wave[1].start();
+}
+function Play2() {
+    wave[2].start();
+}
+function Play3() {
+    wave[3].start();
+}
+function Play4() {
+    wave[4].start();
+}
+function Play5() {
+    wave[5].start();
+}
+function Play6() {
+    wave[6].start();
+}
+
+
+
+function waveChange() {
+    if (waveform == 'sine') {
+        waveform = 'square';
+    } else if (waveform == 'square') {
+        waveform = 'triangle';
+    } else if (waveform == 'triangle') {
+        waveform = 'sawtooth';
+    } else if (waveform == 'sawtooth') {
+        waveform = 'sine';
+    }
+}
+
+
+
+
+
+
+function deviceMoved() {   // 디바이스 앞뒤로 꺽으면 색, 볼륨 변경
+    background(rotationX * 2, 200, 200);
+    text(rotationX, 50, 50);
+
+    // 일어나서 연주하는 것을 기본으로
+    if (rotationX > -30 && rotationX <= 60) {
+        volume_size = (rotationX + 30) / 90;
+    } else if (rotationX > 60 && rotationX <= 180) {
+        volume_size = 1;
+    } else if (rotationX <= -30 && rotationX > -180) {
+        volume_size = 0;
+    }
 }
