@@ -181,14 +181,14 @@ function Piano_style() {
 
     var count1 = 0;
     for (var j = 11; j >= 0; j--) {
-        button[j].parent(pianoDiv)
         if (j == 0 || j == 2 || j == 4 || j == 5 || j == 7 || j == 9 || j == 11) {
-            button[j].position(pianoDiv.width / 5 * 2, pianoDiv.height / 7 * count1);
-            button[j].size(pianoDiv.width / 5 * 3, pianoDiv.height / 7);
+            button[j].position(pianoDiv.width / 10 * 3, pianoDiv.height / 7 * count1);
+            button[j].size(pianoDiv.width / 10 * 7, pianoDiv.height / 7);
             button[j].style('font-size', '30px');
-            button[j].style('text-align', 'center');
+            button[j].style('text-align', 'right');
             button[j].style('background-color', button_col1);
             count1++;
+            button[j].parent(pianoDiv)
         }
     }
 
@@ -198,10 +198,11 @@ function Piano_style() {
             button[i].position(0, pianoDiv.height / 7 * (count2) + pianoDiv.height / 14);
             button[i].size(pianoDiv.width / 5 * 3, pianoDiv.height / 7);
             button[i].style('font-size', '30px');
-            button[i].style('text-align', 'center');
+            button[i].style('text-align', 'right');
             button[i].style('background-color', button_col2);
             if (i == 6) count2++;
             count2++;
+            button[i].parent(pianoDiv)
         }
     }
 }
