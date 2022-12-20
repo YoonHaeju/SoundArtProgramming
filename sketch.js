@@ -11,25 +11,36 @@ var volume_size = 0;
 
 var waveform = 'sine';
 
+// style
+let pianoDiv;
 
 function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
-    createCanvas(300, 200);
+    //createCanvas(displayWidth, displayHeight);
+    createCanvas(500, 900);
+    background(200, 200, 200);
+    pianoDiv = createDiv('',
+        button[0] = createButton('C'),
+        button[1] = createButton('C#'),
+        button[2] = createButton('D'),
+        button[3] = createButton('D#'),
+        button[4] = createButton('E'),
+        button[5] = createButton('F'),
+        button[6] = createButton('F#'),
+        button[7] = createButton('G'),
+        button[8] = createButton('G#'),
+        button[9] = createButton('A'),
+        button[10] = createButton('A#'),
+        button[11] = createButton('B')
+    );
+    Piano_style();
 
-    background(255, 255, 255);
-
-    button[0] = createButton('C');
-    button[1] = createButton('C#');
-    button[2] = createButton('D');
-    button[3] = createButton('D#');
-    button[4] = createButton('E');
-    button[5] = createButton('F');
-    button[6] = createButton('F#');
-    button[7] = createButton('G');
-    button[8] = createButton('G#');
-    button[9] = createButton('A');
-    button[10] = createButton('A#');
-    button[11] = createButton('B');
     waveform_button = createButton('wave');
+    let col = color(25, 23, 200, 50);
+    waveform_button.style('background-color', col);
+    waveform_button.style('font-size', '30px');
+    waveform_button.style('text-align', 'center');
+    //waveform_button.position('100', 100);
+
 
     for (var i = 0; i < 12; i++) {
         wave[i] = new p5.Oscillator();
@@ -159,6 +170,41 @@ function waveChange() {
 }
 
 
+function Piano_style() {
+    pianoDiv.position(width / 8 * 3, 0);
+    pianoDiv.size(width / 8 * 5, height / 10 * 8);
+    let pianoDiv_col = color(255, 255, 255, 100);
+    pianoDiv.style('background-color', pianoDiv_col);
+
+    let button_col1 = color(255, 255, 255, 255);
+    let button_col2 = color(100, 100, 100, 2555);
+
+    var count1 = 0;
+    for (var j = 11; j >= 0; j--) {
+        button[j].parent(pianoDiv)
+        if (j == 0 || j == 2 || j == 4 || j == 5 || j == 7 || j == 9 || j == 11) {
+            button[j].position(pianoDiv.width / 5 * 2, pianoDiv.height / 7 * count1);
+            button[j].size(pianoDiv.width / 5 * 3, pianoDiv.height / 7);
+            button[j].style('font-size', '30px');
+            button[j].style('text-align', 'center');
+            button[j].style('background-color', button_col1);
+            count1++;
+        }
+    }
+
+    var count2 = 0;
+    for (var i = 11; i >= 0; i--) {
+        if (i == 1 || i == 3 || i == 6 || i == 8 || i == 10) {
+            button[i].position(0, pianoDiv.height / 7 * (count2) + pianoDiv.height / 14);
+            button[i].size(pianoDiv.width / 5 * 3, pianoDiv.height / 7);
+            button[i].style('font-size', '30px');
+            button[i].style('text-align', 'center');
+            button[i].style('background-color', button_col2);
+            if (i == 6) count2++;
+            count2++;
+        }
+    }
+}
 
 
 
