@@ -1,7 +1,7 @@
 
 // 오실레이터
 // 0=도 //1=도# // 2=레 // 3=레# // 4=미 // 5=파 // 6=파# // 7=솔 // 8=솔# // 9=라 // 10=라# // 11=시
-var wave = [7];
+var wave = [12];
 
 // 버튼
 var button = [12];
@@ -28,7 +28,7 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
     button[8] = createButton('G#');
     button[9] = createButton('A');
     button[10] = createButton('A#');
-    button[10] = createButton('B');
+    button[11] = createButton('B');
     waveform_button = createButton('wave');
 
     for (var i = 0; i < 12; i++) {
@@ -91,19 +91,19 @@ function Stop6() {
     wave[6].stop();
 }
 function Stop7() {
-    wave[6].stop();
+    wave[7].stop();
 }
 function Stop8() {
-    wave[6].stop();
+    wave[8].stop();
 }
 function Stop9() {
-    wave[6].stop();
+    wave[9].stop();
 }
 function Stop10() {
-    wave[6].stop();
+    wave[10].stop();
 }
 function Stop11() {
-    wave[6].stop();
+    wave[11].stop();
 }
 
 
@@ -129,19 +129,19 @@ function Play6() {
     wave[6].start();
 }
 function Play7() {
-    wave[6].start();
+    wave[7].start();
 }
 function Play8() {
-    wave[6].start();
+    wave[8].start();
 }
 function Play9() {
-    wave[6].start();
+    wave[9].start();
 }
 function Play10() {
-    wave[6].start();
+    wave[10].start();
 }
 function Play11() {
-    wave[6].start();
+    wave[11].start();
 }
 
 
