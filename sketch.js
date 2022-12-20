@@ -1,10 +1,10 @@
 
 // 오실레이터
-// 0=도 // 1=레 // 2=미 // 3=파 // 4=솔 // 5=라 // 6=시
+// 0=도 //1=도# // 2=레 // 3=레# // 4=미 // 5=파 // 6=파# // 7=솔 // 8=솔# // 9=라 // 10=라# // 11=시
 var wave = [7];
 
 // 버튼
-var button = [7];
+var button = [12];
 var waveform_button;
 
 var volume_size = 0;
@@ -18,29 +18,39 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
     background(255, 255, 255);
 
     button[0] = createButton('C');
-    button[1] = createButton('D');
-    button[2] = createButton('E');
-    button[3] = createButton('F');
-    button[4] = createButton('G');
-    button[5] = createButton('A');
-    button[6] = createButton('B');
+    button[1] = createButton('C#');
+    button[2] = createButton('D');
+    button[3] = createButton('D#');
+    button[4] = createButton('E');
+    button[5] = createButton('F');
+    button[6] = createButton('F#');
+    button[7] = createButton('G');
+    button[8] = createButton('G#');
+    button[9] = createButton('A');
+    button[10] = createButton('A#');
+    button[10] = createButton('B');
     waveform_button = createButton('wave');
 
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 12; i++) {
         wave[i] = new p5.Oscillator();
         wave[i].setType(waveform);
         wave[i].amp(volume_size);  // 일단 볼륨 다 0
     }
 
-    wave[0].freq(261.6);
-    wave[1].freq(293.6);
-    wave[2].freq(329.6);
-    wave[3].freq(349.2);
-    wave[4].freq(391.9);
-    wave[5].freq(440);
-    wave[6].freq(493.8);
+    wave[0].freq(261.6256);
+    wave[1].freq(277.1826);
+    wave[2].freq(293.6648);
+    wave[3].freq(311.1270);
+    wave[4].freq(329.7276);
+    wave[5].freq(349.2282);
+    wave[6].freq(369.9944);
+    wave[7].freq(391.9954);
+    wave[8].freq(415.3047);
+    wave[9].freq(440);
+    wave[10].freq(466.1638);
+    wave[11].freq(493.8833);
 
-    for (var j = 0; j < 7; j++) {
+    for (var j = 0; j < 12; j++) {
         button[j].touchStarted(eval("Play" + str(j)));
         button[j].touchEnded(eval("Stop" + str(j)));
     }
@@ -52,7 +62,7 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
 function draw() {   // 1초에 60프레임씩 무한 반복
     //background(255, 255, 255);
 
-    for (var k = 0; k < 7; k++) {
+    for (var k = 0; k < 12; k++) {
         wave[k].setType(waveform);
         wave[k].amp(volume_size);  // 일단 볼륨 다 0
     }
@@ -80,6 +90,21 @@ function Stop5() {
 function Stop6() {
     wave[6].stop();
 }
+function Stop7() {
+    wave[6].stop();
+}
+function Stop8() {
+    wave[6].stop();
+}
+function Stop9() {
+    wave[6].stop();
+}
+function Stop10() {
+    wave[6].stop();
+}
+function Stop11() {
+    wave[6].stop();
+}
 
 
 function Play0() {
@@ -101,6 +126,21 @@ function Play5() {
     wave[5].start();
 }
 function Play6() {
+    wave[6].start();
+}
+function Play7() {
+    wave[6].start();
+}
+function Play8() {
+    wave[6].start();
+}
+function Play9() {
+    wave[6].start();
+}
+function Play10() {
+    wave[6].start();
+}
+function Play11() {
     wave[6].start();
 }
 
