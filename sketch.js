@@ -11,13 +11,21 @@ var volume_size = 0;
 
 var waveform = 'sine';
 
+// 파형분석
+let fft;
+
 // style
 let pianoDiv;
+let volTextDiv;
+let waveTextDiv;
+var volText;
+var waveText;
 
 function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
-    //createCanvas(displayWidth, displayHeight);
-    createCanvas(500, 900);
+    createCanvas(displayWidth, displayHeight * 0.8);
+    //createCanvas(500, 900);
     background(200, 200, 200);
+
     pianoDiv = createDiv('',
         button[0] = createButton('C'),
         button[1] = createButton('C#'),
@@ -33,6 +41,9 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
         button[11] = createButton('B')
     );
     Piano_style();
+
+    volTextDiv = createDiv('');
+    DivText_style();
 
     waveform_button = createButton('wave');
     let col = color(25, 23, 200, 50);
@@ -67,16 +78,36 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
     }
 
     waveform_button.touchStarted(waveChange);
+
+    fft = new p5.FFT();
 }
 
 
 function draw() {   // 1초에 60프레임씩 무한 반복
-    //background(255, 255, 255);
+    background(255, 255, 255);
 
+    // 사운드
     for (var k = 0; k < 12; k++) {
         wave[k].setType(waveform);
         wave[k].amp(volume_size);  // 일단 볼륨 다 0
     }
+
+    // 텍스트
+    textAlign(CENTER, CENTER);
+    textSize(height / 26);
+    text(volume_size.toFixed(4) * 100, width / 16 * 3, height / 20);
+    text(waveform, width / 16 * 3, height / 20 * 3);
+
+    // 파형  
+    let draw_waveform = fft.waveform();
+    beginShape();
+    strokeWeight(5);
+    for (let i = 0; i < draw_waveform.length; i++) {
+        let x = map(i, 0, draw_waveform.length, 0, width);
+        let y = map(draw_waveform[i], -1, 1, height / 10 * 8, height);
+        vertex(x, y);
+    }
+    endShape();
 }
 
 
@@ -191,7 +222,6 @@ function Piano_style() {
             button[j].parent(pianoDiv)
         }
     }
-
     var count2 = 0;
     for (var i = 11; i >= 0; i--) {
         if (i == 1 || i == 3 || i == 6 || i == 8 || i == 10) {
@@ -202,16 +232,23 @@ function Piano_style() {
             button[i].style('background-color', button_col2);
             if (i == 6) count2++;
             count2++;
-            button[i].parent(pianoDiv)
+            button[i].parent(pianoDiv);
         }
     }
+}
+
+function DivText_style() {
+    volTextDiv.position(0, 0);
+    volTextDiv.size(width / 8 * 3, height / 10 * 2);
+    let TextDiv_col = color(50, 150, 255, 10);
+    volTextDiv.style('background-color', TextDiv_col);
 }
 
 
 
 
 function deviceMoved() {   // 디바이스 앞뒤로 꺽으면 색, 볼륨 변경
-    background(rotationX * 2, 200, 200);
+    //background(rotationX * 2, 200, 200);
     text(rotationX, 50, 50);
 
     // 일어나서 연주하는 것을 기본으로
