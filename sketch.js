@@ -21,7 +21,7 @@ let waveDiv;
 var volText;
 
 function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
-    createCanvas(displayWidth, displayHeight * 0.8);
+    createCanvas(displayWidth, displayHeight * 0.9);
     //createCanvas(900, 500);
     background(200, 200, 200);
 
