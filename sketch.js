@@ -5,7 +5,7 @@ var wave = [12];
 
 // 버튼
 var button = [12];
-var waveform_button;
+var waveform_button = [4];
 
 var volume_size = 0;
 
@@ -17,12 +17,11 @@ let fft;
 // style
 let pianoDiv;
 let volTextDiv;
-let waveTextDiv;
+let waveDiv;
 var volText;
-var waveText;
 
 function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
-    createCanvas(displayWidth, displayHeight * 0.8);
+    createCanvas(displayWidth, displayHeight * 0.9);
     //createCanvas(500, 900);
     background(200, 200, 200);
 
@@ -45,12 +44,16 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
     volTextDiv = createDiv('');
     DivText_style();
 
-    waveform_button = createButton('wave');
-    let col = color(25, 23, 200, 50);
-    waveform_button.style('background-color', col);
-    waveform_button.style('font-size', '30px');
-    waveform_button.style('text-align', 'center');
-    //waveform_button.position('100', 100);
+    waveDiv = createDiv('',
+        waveform_button[0] = createButton('sine'),
+        waveform_button[1] = createButton('square'),
+        waveform_button[2] = createButton('triangle'),
+        waveform_button[3] = createButton('sawtooth')
+    );
+    waveDiv_style();
+    for (var j = 0; j < 4; j++) {
+        waveform_button[j].touchStarted(eval("waveChange" + str(j)));
+    }
 
 
     for (var i = 0; i < 12; i++) {
@@ -77,14 +80,12 @@ function setup() {  // 화면 세팅공간 (실행시 처음에 한번 실행)
         button[j].touchEnded(eval("Stop" + str(j)));
     }
 
-    waveform_button.touchStarted(waveChange);
-
     fft = new p5.FFT();
 }
 
 
 function draw() {   // 1초에 60프레임씩 무한 반복
-    background(255, 255, 255);
+    background(0, 0, 0);
 
     // 사운드
     for (var k = 0; k < 12; k++) {
@@ -93,14 +94,18 @@ function draw() {   // 1초에 60프레임씩 무한 반복
     }
 
     // 텍스트
+    strokeWeight(0);
+    fill('white');
     textAlign(CENTER, CENTER);
     textSize(height / 26);
     text(volume_size.toFixed(4) * 100, width / 16 * 3, height / 20);
     text(waveform, width / 16 * 3, height / 20 * 3);
 
     // 파형  
+    noFill();
     let draw_waveform = fft.waveform();
     beginShape();
+    stroke('white');
     strokeWeight(5);
     for (let i = 0; i < draw_waveform.length; i++) {
         let x = map(i, 0, draw_waveform.length, 0, width);
@@ -188,23 +193,27 @@ function Play11() {
 
 
 
-function waveChange() {
-    if (waveform == 'sine') {
-        waveform = 'square';
-    } else if (waveform == 'square') {
-        waveform = 'triangle';
-    } else if (waveform == 'triangle') {
-        waveform = 'sawtooth';
-    } else if (waveform == 'sawtooth') {
-        waveform = 'sine';
-    }
+function waveChange0() {
+    waveform = 'sine';
+}
+
+function waveChange1() {
+    waveform = 'square';
+}
+
+function waveChange2() {
+    waveform = 'triangle';
+}
+
+function waveChange3() {
+    waveform = 'sawtooth';
 }
 
 
 function Piano_style() {
     pianoDiv.position(width / 8 * 3, 0);
     pianoDiv.size(width / 8 * 5, height / 10 * 8);
-    let pianoDiv_col = color(255, 255, 255, 100);
+    let pianoDiv_col = color(255, 255, 255, 255);
     pianoDiv.style('background-color', pianoDiv_col);
 
     let button_col1 = color(255, 255, 255, 255);
@@ -244,7 +253,26 @@ function DivText_style() {
     volTextDiv.style('background-color', TextDiv_col);
 }
 
+function waveDiv_style() {
+    waveDiv.position(0, height / 10 * 2);
+    waveDiv.size(width / 8 * 3, height / 10 * 6);
+    let waveDiv_col = color(0, 0, 0, 255);
+    waveDiv.style('background-color', waveDiv_col);
 
+    waveform_button[0].position(waveDiv.width / 8, waveDiv.height / 21);
+    waveform_button[1].position(waveDiv.width / 8, waveDiv.height / 21 * 6);
+    waveform_button[2].position(waveDiv.width / 8, waveDiv.height / 21 * 11);
+    waveform_button[3].position(waveDiv.width / 8, waveDiv.height / 21 * 16);
+    for (var i = 0; i < 4; i++) {
+        waveform_button[i].size(waveDiv.width / 8 * 6, pianoDiv.height / 20 * 3);
+        let wavebtn_col = color(50, 35, 130, 150);
+        waveform_button[i].style('background-color', wavebtn_col);
+        waveform_button[i].style('font-size', '20px');
+        waveform_button[i].style('text-align', 'center');
+        waveform_button[i].style('color', 'white');
+        waveform_button[i].parent(waveDiv);
+    }
+}
 
 
 function deviceMoved() {   // 디바이스 앞뒤로 꺽으면 색, 볼륨 변경
